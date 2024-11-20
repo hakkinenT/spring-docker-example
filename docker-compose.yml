@@ -1,0 +1,24 @@
+services:
+  back-end:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: exec
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    env_file:
+      src/main/resources/env.properties
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      src/main/resources/env.properties
+    volumes:
+      - db-app:/var/lib/postgresql/data
+
+volumes:
+  db-app:
